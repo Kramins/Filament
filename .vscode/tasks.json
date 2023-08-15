@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/server/server.csproj",
+                "${workspaceFolder}/backend/server/server.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -23,7 +23,7 @@
             ],
             "args": [
                 "generate", 
-                "--project-folder ${workspaceFolder}/server/"
+                "--project-folder ${workspaceFolder}/backend/server/"
             ]
         },
         {
@@ -32,7 +32,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/server/server.csproj",
+                "${workspaceFolder}/backend/server/server.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -46,7 +46,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/server/server.csproj"
+                "${workspaceFolder}/backend/server/server.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
