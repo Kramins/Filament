@@ -5,5 +5,5 @@ public class AddLibraryDto
 {
     public required string Name { get; set; }
     public required string Type { get; set; }
-    public required string Path { get; set; }
+    public required string Location { get; set; }
 }

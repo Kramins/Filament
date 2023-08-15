@@ -1,3 +1,4 @@
+using filament;
 using filament.data;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<FilamentDataContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("FilamentConnectionString"));
 });
+
+
+builder.AddFilamentDependencies();
 
 var app = builder.Build();
 
