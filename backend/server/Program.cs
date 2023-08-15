@@ -30,4 +30,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.SetupDatabase();
+
 app.Run();
