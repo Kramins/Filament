@@ -30,6 +30,14 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
-        }
+        },
+        {
+            "name": "vuejs: firefox",
+            "type": "firefox",
+            "request": "launch",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}frontend/filament/src",
+            "pathMappings": [{ "url": "webpack:///src/", "path": "${webRoot}/" }]
+          }
     ]
 }
