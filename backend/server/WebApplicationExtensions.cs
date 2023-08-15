@@ -10,7 +10,11 @@ public static class WebApplicationExtensions
         using (var scope = app.Services.CreateScope())
         using (var context = scope.ServiceProvider.GetService<FilamentDataContext>())
         {
-            // context.Database.EnsureCreated();
+            if (context == null)
+            {
+                return;
+            }
+
             context.Database.Migrate();
         }
     }
