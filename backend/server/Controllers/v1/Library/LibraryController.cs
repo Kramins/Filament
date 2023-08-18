@@ -1,13 +1,13 @@
 
 using filament.data.models;
-using filament.dto.v1;
+using filament.scheduler;
 using filament.services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace filament.api.v1;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/library")]
 public class LibraryController
 {
     private readonly ILogger<LibraryController> _logger;
@@ -17,6 +17,7 @@ public class LibraryController
     {
         _libraryService = libraryService;
         _logger = logger;
+
     }
 
 
@@ -35,6 +36,20 @@ public class LibraryController
         return libraries.ToList();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// Sample request:
+    ///
+    ///     POST /api/v1/library
+    ///     {
+    ///        "id": 1,
+    ///        "name": "Item #1",
+    ///        "isComplete": true
+    ///     }
+    ///
+    /// </remarks>
+    /// <param name="library"></param>
     [HttpPost]
     public void Post([FromBody] AddLibraryDto library)
     {

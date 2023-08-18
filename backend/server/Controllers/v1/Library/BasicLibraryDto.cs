@@ -1,4 +1,4 @@
-namespace filament.dto.v1;
+namespace filament.api.v1;
 
 public class BasicLibraryDto
 {
