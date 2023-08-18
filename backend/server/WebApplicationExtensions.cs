@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using filament.data;
 using filament.data.models;
 using filament.services;
+using filament.scheduler;
+using filament.tasks;
 
 namespace filament;
 
@@ -10,7 +12,10 @@ public static class WebApplicationExtensions
 
     public static void AddFilamentDependencies(this WebApplicationBuilder builder)
     {
+        builder.Services.AddTransient<SchedulerClientService>();
         builder.Services.AddTransient<LibraryService>();
+
+        builder.Services.AddScoped<ScanLibraryTask>();
     }
 
     public static void SetupDatabase(this WebApplication app)
