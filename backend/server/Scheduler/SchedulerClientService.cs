@@ -30,6 +30,11 @@ public class SchedulerClientService
 
     }
 
+    public void EmitEvent(string eventName, object data)
+    {
+        var serializedData = JsonConvert.SerializeObject(data);
+        _redis.GetSubscriber().Publish(eventName, serializedData);
+    }
     public void PublishBackgroundTask<T>(Expression<Action<T>> methodCall)
     {
         if (!CheckTypeIsInScope(typeof(T)))

@@ -11,7 +11,7 @@ public class LibraryConfiguration : IEntityTypeConfiguration<Library>
         builder.HasKey(l => l.Id);
         builder.HasAlternateKey(l => l.Name);
 
-        builder.Property(l => l.Created)
+        builder.Property(l => l.EntityCreated)
             .HasDefaultValueSql("now()");
     }
 }

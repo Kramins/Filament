@@ -10,6 +10,7 @@ public class FilamentDataContext : DbContext
 {
 
     public DbSet<Library> Libraries { get; set; }
+    public DbSet<LibraryFile> LibraryFiles { get; set; }
 
     public FilamentDataContext(DbContextOptions<FilamentDataContext> config) : base(config)
     {

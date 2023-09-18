@@ -3,6 +3,7 @@ using filament.data.models;
 using filament.scheduler;
 using filament.services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace filament.api.v1;
 
@@ -22,18 +23,18 @@ public class LibraryController
 
 
     [HttpGet]
-    public IEnumerable<BasicLibraryDto> Get()
+    public ApiResponse<IEnumerable<BasicLibraryDto>> Get()
     {
         _logger.LogInformation("Getting all libraries");
         var libraries = _libraryService.GetAllWithBasic().Select(x => new BasicLibraryDto()
         {
             Id = x.Id,
             Name = x.Name,
-            Created = x.Created,
+            Created = x.EntityCreated,
             Type = x.Type
         });
 
-        return libraries.ToList();
+        return new ApiResponse<IEnumerable<BasicLibraryDto>>(libraries.ToList());
     }
 
     /// <summary>
@@ -51,7 +52,7 @@ public class LibraryController
     /// </remarks>
     /// <param name="library"></param>
     [HttpPost]
-    public void Post([FromBody] AddLibraryDto library)
+    public ApiResponse<AddLibraryResponseDto> Post([FromBody] AddLibraryRequestDto library)
     {
         var newLibrary = new Library()
         {
@@ -63,6 +64,11 @@ public class LibraryController
         var id = _libraryService.Add(newLibrary);
 
         _logger.LogInformation($"Added new library with id {id}");
+
+        return new ApiResponse<AddLibraryResponseDto>(new AddLibraryResponseDto()
+        {
+            Id = id
+        });
 
     }
 

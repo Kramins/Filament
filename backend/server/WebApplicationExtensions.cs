@@ -14,6 +14,8 @@ public static class WebApplicationExtensions
     {
         builder.Services.AddTransient<SchedulerClientService>();
         builder.Services.AddTransient<LibraryService>();
+        builder.Services.AddTransient<DiskScanService>();
+        builder.Services.AddTransient<TaskService>();
 
         builder.Services.AddScoped<ScanLibraryTask>();
     }

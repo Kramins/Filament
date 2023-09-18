@@ -1,11 +1,10 @@
 namespace filament.data.models;
 
 
-public class Library
+public class Library : EntityBase
 {
-    public int Id { get; set; }
     public required String Name { get; set; }
     public required String Location { get; set; }
     public required String Type { get; set; }
-    public DateTime Created { get; set; }
+    public ICollection<LibraryFile> Files { get; set; } = null!;
 }

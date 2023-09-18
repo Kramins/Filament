@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace filament.api.v1;
 
 
-public class AddLibraryDto
+public class AddLibraryRequestDto
 {
     [Required]
     [SwaggerSchema("Name of the library.")]

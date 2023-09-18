@@ -15,11 +15,14 @@
     "vscode": {
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
-        "ms-dotnettools.csharp",
-        "eamodio.gitlens",
-        "streetsidesoftware.code-spell-checker",
-        "fernandoescolar.vscode-solution-explorer"
-      ]
+		"ms-dotnettools.csharp",
+		"eamodio.gitlens",
+		"streetsidesoftware.code-spell-checker",
+		"fernandoescolar.vscode-solution-explorer",
+		"ckolkman.vscode-postgres",
+		"ms-azuretools.vscode-docker",
+		"Postman.postman-for-vscode"
+	]
     }
   },
   "features": {
