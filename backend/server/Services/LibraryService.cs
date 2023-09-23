@@ -39,7 +39,7 @@ public class LibraryService
         _dataContext.SaveChanges();
 
         var libraryId = library.Id;
-        _schedulerClientService.PublishBackgroundTask<ScanLibraryTask>(x => x.Scan(library.Id));
+        _schedulerClientService.PublishChannelTask<ScanLibraryTask>(x => x.Scan(library.Id), "background-tasks");
 
         return library.Id;
     }
@@ -65,11 +65,37 @@ public class LibraryService
         return _dataContext.LibraryFiles.Where(x => x.LibraryId == libraryId);
     }
 
-    internal void AddFile(Library library, LibraryFile libraryFile)
+    public void AddFile(Library library, LibraryFile libraryFile)
     {
         libraryFile.LibraryId = library.Id;
         _dataContext.LibraryFiles.Add(libraryFile);
         _dataContext.SaveChanges();
+    }
+
+    public void UpdateFile(Library library, LibraryFile directoryInfo)
+    {
+        _dataContext.LibraryFiles.Update(directoryInfo);
+        _dataContext.SaveChanges();
+    }
+
+    public string TrimFilePath(Library library, string file)
+    {
+        if (!file.StartsWith(library.Location))
+        {
+            _logger.LogTrace($"File {file} does not start with library location {library.Location}");
+            return file;
+        }
+        return file.Substring(library.Location.Length);
+    }
+
+    public string GetFullFilePath(Library library, string file)
+    {
+        return library.Location + file;
+    }
+
+    internal void DeleteFile(Library library, LibraryFile libraryFile)
+    {
+        throw new NotImplementedException();
     }
 }
 

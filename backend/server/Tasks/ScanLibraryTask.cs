@@ -1,7 +1,7 @@
 using filament.data;
 using filament.data.models;
 using filament.services;
-using server.Data.Models;
+
 
 namespace filament.tasks;
 public class ScanLibraryTask
@@ -9,13 +9,13 @@ public class ScanLibraryTask
 
     private readonly ILogger<ScanLibraryTask> _logger;
     private readonly LibraryService _libraryService;
-    private readonly DiskScanService _diskScanService;
+    private readonly FileMetaDataService _fileMetaDataService;
 
-    public ScanLibraryTask(LibraryService libraryService, DiskScanService diskScanService, ILogger<ScanLibraryTask> logger)
+    public ScanLibraryTask(LibraryService libraryService, FileMetaDataService fileMetaDataService, ILogger<ScanLibraryTask> logger)
     {
 
         _libraryService = libraryService;
-        _diskScanService = diskScanService;
+        _fileMetaDataService = fileMetaDataService;
         _logger = logger;
     }
 
@@ -27,9 +27,10 @@ public class ScanLibraryTask
 
         switch (library.Type)
         {
-            case LibraryType.Movies:
-                ScanMovies(library);
+            case LibraryType.Videos:
+                ScanVideos(library);
                 break;
+
             // case LibraryType.TV:
             //     ScanTV(library);
             //     break;
@@ -38,34 +39,92 @@ public class ScanLibraryTask
         }
     }
 
-    private void ScanMovies(Library library)
+    private void ScanVideos(Library library)
     {
         var libraryFileExtensions = new string[] { ".mkv", ".mp4", ".avi", ".mov", ".wmv", ".m4v" };
-        var physicalFiles = _diskScanService.GetFilesOf(library.Location, libraryFileExtensions);
+
 
         var libraryFiles = _libraryService.GetFiles(library.Id).ToList();
 
-        var newFiles = physicalFiles.Where(x => !libraryFiles.Any(y => y.Path == x.Path)).ToList();
-        var deletedFiles = libraryFiles.Where(x => !physicalFiles.Any(y => y.Path == x.Path)).ToList();
-        var existingFiles = from f in physicalFiles
-                            join lf in libraryFiles on f.Path equals lf.Path
-                            select new { PhysicalFile = f, LibraryFile = lf };
+        WalkDirectory(library.Location, libraryFiles, library, libraryFileExtensions);
+    }
+    private void WalkDirectory(string path, List<LibraryFile> libraryFiles, Library library, string[] libraryFileExtensions)
+    {
+        _logger.LogInformation($"Scanning directory {path}");
+        var files = Directory.GetFiles(path);
 
-        foreach (var file in newFiles)
+        var libraryDirectoryInfo = libraryFiles.FirstOrDefault(x => x.Path == path);
+        var directoryInfo = new DirectoryInfo(path);
+        if (libraryDirectoryInfo == null)
         {
-            _logger.LogInformation($"Adding file {file.Path}");
-            _libraryService.AddFile(library, new LibraryFile()
+            libraryDirectoryInfo = new LibraryFile()
             {
-                Path = file.Path,
-                Name = file.Name,
-                Extension = file.Extension,
-                Size = file.Size,
-                LastModified = file.LastModified
-            });
+                Path = _libraryService.TrimFilePath(library, path) + "/", // Add trailing slash
+                Name = directoryInfo.Name,
+                IsDirectory = true,
+                Size = 0,
+                LastModified = directoryInfo.LastWriteTimeUtc,
+            };
+            _libraryService.AddFile(library, libraryDirectoryInfo);
+        }
+        else
+        {
+            libraryDirectoryInfo.Size = 0;
+            libraryDirectoryInfo.LastModified = directoryInfo.LastWriteTimeUtc;
+            _libraryService.UpdateFile(library, libraryDirectoryInfo);
+        }
+        // Delete files that no longer exist
+        foreach (var libraryFile in libraryFiles.Where(x => x.Path.StartsWith(libraryDirectoryInfo.Path)))
+        {
+            if (!files.Contains(_libraryService.GetFullFilePath(library, libraryFile.Path)))
+            {
+                _libraryService.DeleteFile(library, libraryFile);
+            }
+        }
+        // Add of update files
+        foreach (var file in files)
+        {
+            var extension = Path.GetExtension(file);
+            if (!libraryFileExtensions.Contains(extension))
+            {
+                _logger.LogTrace($"Skipping file {file} as it is not an allowed file type");
+                continue;
+            }
+            var fileInfo = new FileInfo(file);
+            var libraryFilePath = _libraryService.TrimFilePath(library, file);
+            var libraryFile = libraryFiles.FirstOrDefault(x => x.Path == libraryFilePath);
+
+            if (libraryFile == null)
+            {
+                libraryFile = new LibraryFile()
+                {
+                    Path = libraryFilePath,
+                    IsDirectory = false,
+                    Name = fileInfo.Name,
+                    Extension = fileInfo.Extension,
+                    Size = fileInfo.Length,
+                    LastModified = fileInfo.LastWriteTimeUtc,
+                };
+                _libraryService.AddFile(library, libraryFile);
+            }
+            else
+            {
+                libraryFile.Size = fileInfo.Length;
+                libraryFile.LastModified = fileInfo.LastWriteTimeUtc;
+                _libraryService.UpdateFile(library, libraryFile);
+            }
+
+            libraryDirectoryInfo.Size += fileInfo.Length;
+            _libraryService.UpdateFile(library, libraryDirectoryInfo);
+            _fileMetaDataService.ScanFile(library, libraryFile);
+
         }
 
-
-
-
+        var directories = Directory.GetDirectories(path);
+        foreach (var directory in directories)
+        {
+            WalkDirectory(directory, libraryFiles, library, libraryFileExtensions);
+        }
     }
+
 }

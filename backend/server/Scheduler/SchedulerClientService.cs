@@ -1,53 +1,51 @@
-using System;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using StackExchange.Redis;
 using Newtonsoft.Json;
-using filament.tasks;
+using filament.data;
+using filament.data.models;
+using System.Text.Json;
 
 namespace filament.scheduler;
 
 public class SchedulerClientService
 {
-
-    IOptions<SchedulerSettings> _settings;
-    private ConnectionMultiplexer _redis;
+    private readonly FilamentDataContext _dataContext;
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<SchedulerClientService> _logger;
-    private RedisChannel _backgroundTasksChannel;
 
-    public SchedulerClientService(IOptions<SchedulerSettings> settings, IServiceProvider serviceProvider, ILogger<SchedulerClientService> logger)
+    public SchedulerClientService(IOptions<SchedulerSettings> settings, FilamentDataContext dataContext, IServiceProvider serviceProvider, ILogger<SchedulerClientService> logger)
     {
-        _settings = settings;
-        _redis = ConnectionMultiplexer.Connect(_settings.Value.ConnectionString);
+        _dataContext = dataContext;
         _serviceProvider = serviceProvider;
         _logger = logger;
-
-        _backgroundTasksChannel = RedisChannel.Literal("BackgroundTasks");
-
-
     }
 
     public void EmitEvent(string eventName, object data)
     {
         var serializedData = JsonConvert.SerializeObject(data);
-        _redis.GetSubscriber().Publish(eventName, serializedData);
+
     }
-    public void PublishBackgroundTask<T>(Expression<Action<T>> methodCall)
+    public Guid PublishChannelTask<T>(Expression<Action<T>> methodCall, string channel)
     {
         if (!CheckTypeIsInScope(typeof(T)))
         {
             _logger.LogError("Type {Type} is not in scope", typeof(T));
             throw new Exception($"Type {typeof(T)} is not in scope");
-            return;
-        }
+          }
 
         var job = ScheduleTask.FromExpression(methodCall, typeof(T));
         var serializedJob = JsonConvert.SerializeObject(job);
 
-        _redis.GetSubscriber().Publish(_backgroundTasksChannel, serializedJob);
+        var queueItem = new QueueItem()
+        {
+            Channel = channel,
+            Payload = JsonDocument.Parse(serializedJob),
+            Status = "queued"
+        };
+
+        _dataContext.TaskQueue.Add(queueItem);
+        _dataContext.SaveChanges();
+        return queueItem.Id;
     }
 
     private bool CheckTypeIsInScope(Type type)

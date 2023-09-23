@@ -20,7 +20,8 @@ public class DiskScanService
         var allFiles = Directory.EnumerateFiles(path, "*", new EnumerationOptions
         {
             RecurseSubdirectories = true,
-            IgnoreInaccessible = true
+            IgnoreInaccessible = true,
+
         });
 
         var filteredFileList = allFiles.Where(file => extension.Contains(Path.GetExtension(file)))

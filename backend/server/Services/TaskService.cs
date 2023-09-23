@@ -23,6 +23,6 @@ public class TaskService
 
     public void ScanLibrary(int libraryId)
     {
-        _schedulerClientService.PublishBackgroundTask<ScanLibraryTask>(x => x.Scan(libraryId));
+        _schedulerClientService.PublishChannelTask<ScanLibraryTask>(x => x.Scan(libraryId), "background-tasks");
     }
 }

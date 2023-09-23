@@ -8,6 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+
+builder.Logging.AddSimpleConsole(options =>
+{
+    options.IncludeScopes = true;
+    options.SingleLine = true;
+    options.TimestampFormat = "[HH:mm:ss] ";
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -26,11 +35,6 @@ builder.Services.AddDbContext<FilamentDataContext>(options =>
 });
 
 
-builder.Services.Configure<SchedulerSettings>(c =>
-{
-    c.Interval = 1000;
-    c.ConnectionString = "redis:6379";
-});
 builder.Services.AddHostedService<SchedulerHostedService>();
 
 builder.AddFilamentDependencies();

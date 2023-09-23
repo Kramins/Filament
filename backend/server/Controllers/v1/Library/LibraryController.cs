@@ -23,10 +23,10 @@ public class LibraryController
 
 
     [HttpGet]
-    public ApiResponse<IEnumerable<BasicLibraryDto>> Get()
+    public ApiResponse<IEnumerable<LibraryDto>> Get()
     {
         _logger.LogInformation("Getting all libraries");
-        var libraries = _libraryService.GetAllWithBasic().Select(x => new BasicLibraryDto()
+        var libraries = _libraryService.GetAllWithBasic().Select(x => new LibraryDto()
         {
             Id = x.Id,
             Name = x.Name,
@@ -34,7 +34,13 @@ public class LibraryController
             Type = x.Type
         });
 
-        return new ApiResponse<IEnumerable<BasicLibraryDto>>(libraries.ToList());
+        return new ApiResponse<IEnumerable<LibraryDto>>(libraries.ToList());
+    }
+
+    [HttpGet("{id}")]
+    public ApiResponse<LibraryDetailsDto> Get(int id)
+    {
+        return null;
     }
 
     /// <summary>
