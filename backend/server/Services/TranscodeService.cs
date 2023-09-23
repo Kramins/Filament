@@ -41,7 +41,7 @@ public class TranscodeService
         return _dataContext.TranscodeJobs.SingleOrDefault(j => j.Id == transcodeJobId);
     }
 
-    public void SubmitTranscodeJob(TranscodeDto transcode)
+    public void SubmitTranscodeJob(TranscodeJobRequestDto transcode)
     {
         throw new NotImplementedException();
     }

@@ -19,7 +19,7 @@ public class TranscodeController
     }
 
     [HttpPost]
-    public ApiResponse<TranscodeDto> Transcode(TranscodeDto transcode)
+    public ApiResponse<TranscodeJobRequestDto> Transcode(TranscodeJobRequestDto transcode)
     {
         _transcodeService.SubmitTranscodeJob(transcode);
         return null;

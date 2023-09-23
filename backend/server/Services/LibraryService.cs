@@ -65,6 +65,11 @@ public class LibraryService
         return _dataContext.LibraryFiles.Where(x => x.LibraryId == libraryId);
     }
 
+    public IQueryable<LibraryFile> GetFiles(int libraryId, string path)
+    {
+        return _dataContext.LibraryFiles.Where(x => x.LibraryId == libraryId && x.Path == path);
+    }
+
     public void AddFile(Library library, LibraryFile libraryFile)
     {
         libraryFile.LibraryId = library.Id;
@@ -85,6 +90,7 @@ public class LibraryService
             _logger.LogTrace($"File {file} does not start with library location {library.Location}");
             return file;
         }
+
         return file.Substring(library.Location.Length);
     }
 
@@ -94,6 +100,11 @@ public class LibraryService
     }
 
     internal void DeleteFile(Library library, LibraryFile libraryFile)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal object GetLibraryFiles(int libraryId, string path)
     {
         throw new NotImplementedException();
     }
