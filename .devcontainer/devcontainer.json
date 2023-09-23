@@ -21,7 +21,8 @@
 		"fernandoescolar.vscode-solution-explorer",
 		"ckolkman.vscode-postgres",
 		"ms-azuretools.vscode-docker",
-		"Postman.postman-for-vscode"
+		"Postman.postman-for-vscode",
+		"yzhang.markdown-all-in-one"
 	]
     }
   },
