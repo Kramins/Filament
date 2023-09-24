@@ -1,6 +1,4 @@
-
 namespace filament.data.models;
-
 
 public class TranscodeJob : EntityBase
 {
@@ -8,5 +6,4 @@ public class TranscodeJob : EntityBase
     public int TranscodeProfileId { get; set; }
     public string Status { get; set; } = null!;
     public string OutputPath { get; set; } = null!;
-
 }

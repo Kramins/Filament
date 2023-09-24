@@ -4,21 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace filament.scheduler;
+
 public class SchedulerChannelWorker
 {
+    private Timer _timer = null;
 
-    Timer _timer = null;
+    private List<Task> _tasks = new List<Task>();
+    private int _maxConcurrency = 1;
 
-    List<Task> _tasks = new List<Task>();
-    int _maxConcurrency = 1;
     public SchedulerChannelWorker(string channelName, IServiceProvider serviceProvider, ILogger<SchedulerHostedService> logger)
     {
         this.channelName = channelName;
         _serviceProvider = serviceProvider;
         _Interval = TimeSpan.FromSeconds(1);
         _logger = logger;
-
     }
+
     public void Start()
     {
         _logger.LogInformation("Starting channel {Channel}", channelName);
@@ -32,6 +33,7 @@ public class SchedulerChannelWorker
         _timer?.Dispose();
         _timer = null;
     }
+
     private void ProcessBackgroundTask(QueueItem message)
     {
         using (var scope = _serviceProvider.CreateScope())
@@ -41,7 +43,6 @@ public class SchedulerChannelWorker
             var task = JsonConvert.DeserializeObject<ScheduleTask>(message.Payload.RootElement.GetRawText());
 
             _logger.LogInformation("Processing background task: {Task}", task);
-
 
             var taskType = Type.GetType(task.Type);
 
@@ -119,7 +120,6 @@ public class SchedulerChannelWorker
                         _logger.LogError(e, "Error processing background task");
                         transaction.Rollback();
                     }
-
                 }
             }
         }

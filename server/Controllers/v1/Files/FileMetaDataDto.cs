@@ -1,4 +1,3 @@
-
 using System.Text.Json;
 
 namespace filament.api.v1;

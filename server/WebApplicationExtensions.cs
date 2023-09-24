@@ -1,15 +1,14 @@
-using Microsoft.EntityFrameworkCore;
 using filament.data;
 using filament.data.models;
-using filament.services;
 using filament.scheduler;
+using filament.services;
 using filament.tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace filament;
 
 public static class WebApplicationExtensions
 {
-
     public static void AddFilamentDependencies(this WebApplicationBuilder builder)
     {
         builder.Services.AddTransient<SchedulerClientService>();
@@ -29,7 +28,6 @@ public static class WebApplicationExtensions
             var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
             if (context == null)
             {
-
                 return;
             }
             var currentDatabaseVersion = context.Database.GetAppliedMigrations().LastOrDefault();
@@ -46,7 +44,6 @@ public static class WebApplicationExtensions
                 logger.LogInformation("No settings found, creating default settings");
                 context.Settings.Add(new SettingsItem { Name = "FilamentConnectionString", Value = "Host=localhost;Port=5432;Database=filament;Username=filament;Password=filament" });
                 context.Settings.Add(new SettingsItem { Name = "ScanInterval", Value = "60" });
-
 
                 context.TranscodeProfiles.Add(new TranscodeProfile()
                 {
@@ -73,7 +70,6 @@ public static class WebApplicationExtensions
             {
                 configuration[setting.Name] = setting.Value;
             }
-
         }
     }
 }

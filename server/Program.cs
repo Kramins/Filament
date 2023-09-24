@@ -1,10 +1,7 @@
-using System.Reflection;
 using filament;
 using filament.data;
 using filament.scheduler;
 using Microsoft.EntityFrameworkCore;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,15 +22,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.EnableAnnotations();
-
-
 });
 
 builder.Services.AddDbContext<FilamentDataContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("FilamentConnectionString"));
 });
-
 
 builder.Services.AddHostedService<SchedulerHostedService>();
 
@@ -59,7 +53,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.SetupDatabase();
-
-
 
 app.Run();

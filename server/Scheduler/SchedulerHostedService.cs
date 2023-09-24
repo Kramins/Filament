@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 
 namespace filament.scheduler;
+
 public class SchedulerHostedService : IHostedService, IDisposable
 {
     private readonly IServiceProvider _serviceProvider;
@@ -30,7 +31,6 @@ public class SchedulerHostedService : IHostedService, IDisposable
         var transcodeTaskChannelName = "transcode-tasks";
         var transcodeChannel = new SchedulerChannelWorker(transcodeTaskChannelName, _serviceProvider, _logger);
         _channels.Add(transcodeTaskChannelName, transcodeChannel);
-
 
         _channels.Values.ToList().ForEach(c => c.Start());
 

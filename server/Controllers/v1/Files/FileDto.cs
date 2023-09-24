@@ -10,5 +10,4 @@ public class FileDto
     public string Extension { get; set; } = null!;
     public DateTime LastModified { get; set; }
     public DateTime Created { get; set; }
-
 }

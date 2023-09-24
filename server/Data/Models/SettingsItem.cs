@@ -1,5 +1,3 @@
-
-
 namespace filament.data.models;
 
 public class SettingsItem : EntityBase

@@ -1,15 +1,14 @@
-using System.Runtime.Serialization;
 using filament.data;
 using filament.data.models;
 using filament.scheduler;
 using filament.tasks;
+using System.Runtime.Serialization;
 
 namespace filament.services;
 
 public class LibraryService
 {
-
-    FilamentDataContext _dataContext;
+    private FilamentDataContext _dataContext;
     private readonly ILogger<LibraryService> _logger;
     private readonly SchedulerClientService _schedulerClientService;
 
@@ -46,6 +45,7 @@ public class LibraryService
     {
         return _dataContext.Libraries.FirstOrDefault(x => x.Id == libraryId);
     }
+
     public void Delete(int libraryId)
     {
         var library = _dataContext.Libraries.FirstOrDefault(x => x.Id == libraryId);
@@ -85,8 +85,7 @@ public class LibraryService
     {
         var relativePath = Path.GetRelativePath(library.Location, file);
         var directoryName = Path.GetDirectoryName(relativePath) + Path.DirectorySeparatorChar;
-        
-        
+
         //if (!file.StartsWith(library.Location))
         //{
         //    _logger.LogTrace($"File {file} does not start with library location {library.Location}");

@@ -1,15 +1,6 @@
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace filament.scheduler;
-
 
 public class ScheduleTask
 {
@@ -20,13 +11,12 @@ public class ScheduleTask
 
     public ScheduleTask(string type, string method, List<string> argumentTypes, List<string> arguments)
     {
-
         this.Type = type;
         this.Method = method;
         this.ArgumentTypes = argumentTypes;
         this.Arguments = arguments;
-
     }
+
     public static ScheduleTask FromExpression(LambdaExpression methodCall, Type explicitType)
     {
         if (methodCall == null) throw new ArgumentNullException(nameof(methodCall));
@@ -42,7 +32,6 @@ public class ScheduleTask
 
         var argumentTypes = method.GetParameters().Select(x => x.ParameterType.FullName).ToList();
         var arguments = callExpression.Arguments.Select(x => (GetValueFromExpression(x))).ToList();
-
 
         return new ScheduleTask(
             type.FullName,

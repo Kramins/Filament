@@ -1,13 +1,9 @@
-
-
 namespace filament.services;
 
 public class DiskScanService
 {
-
     public DiskScanService()
     {
-
     }
 
     public IEnumerable<DiskScanFileInfo> GetFilesOf(string path, string[] extension)
@@ -21,7 +17,6 @@ public class DiskScanService
         {
             RecurseSubdirectories = true,
             IgnoreInaccessible = true,
-
         });
 
         var filteredFileList = allFiles.Where(file => extension.Contains(Path.GetExtension(file)))

@@ -1,5 +1,3 @@
-
-
 using filament.services;
 
 namespace filament.tasks;
@@ -14,6 +12,7 @@ public class TranscodeTask
         _transcodeService = transcodeService;
         _logger = logger;
     }
+
     public void Transcode(int transcodeJobId)
     {
         _logger.LogInformation($"Transcoding job {transcodeJobId}");

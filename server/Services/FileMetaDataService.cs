@@ -1,13 +1,8 @@
-
-
-using FFMpegCore;
 using filament.data;
 using filament.data.models;
 using filament.providers.metadata;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
 namespace filament.services;
-
 
 public class FileMetaDataService
 {
@@ -25,7 +20,6 @@ public class FileMetaDataService
 
         _metadataDetailsProviders.Add(new FfmpegMetaDataProvider(logger));
     }
-
 
     public void ScanFile(Library library, LibraryFile file)
     {

@@ -1,10 +1,10 @@
-
-using System.Text.Json;
 using FFMpegCore;
 using filament.data.models;
 using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace filament.providers.metadata;
+
 public class FfmpegMetaDataProvider : IFileMetaDataProvider
 {
     private readonly ILogger _logger;
@@ -13,6 +13,7 @@ public class FfmpegMetaDataProvider : IFileMetaDataProvider
     {
         _logger = logger;
     }
+
     public async Task<List<LibraryFileMetaData>> ScanAsync(string filePath)
     {
         FileInfo fileInfo = new(filePath);
@@ -76,7 +77,6 @@ public class FfmpegMetaDataProvider : IFileMetaDataProvider
 
             metadata.Add(filemetadata);
         }
-
 
         return metadata;
     }

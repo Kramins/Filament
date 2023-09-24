@@ -1,8 +1,5 @@
-using filament.data.models;
-using filament.scheduler;
 using filament.services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace filament.api.v1;
 

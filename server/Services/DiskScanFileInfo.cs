@@ -1,5 +1,5 @@
-
 namespace filament.services;
+
 public class DiskScanFileInfo
 {
     public string Name { get; internal set; }

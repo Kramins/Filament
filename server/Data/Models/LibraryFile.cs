@@ -1,6 +1,5 @@
-
-
 namespace filament.data.models;
+
 public class LibraryFile : EntityBase
 {
     public int LibraryId { get; set; }

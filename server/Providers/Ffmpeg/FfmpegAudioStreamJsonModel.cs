@@ -1,5 +1,3 @@
-
-
 namespace filament.providers.metadata;
 
 public class FfmpegAudioStreamJsonModel

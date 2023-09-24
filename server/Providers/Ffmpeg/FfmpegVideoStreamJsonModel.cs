@@ -1,6 +1,5 @@
-
-
 namespace filament.providers.metadata;
+
 public class FfmpegVideoStreamJsonModel
 {
     public long BitRate { get; internal set; }

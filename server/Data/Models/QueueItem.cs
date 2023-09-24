@@ -1,6 +1,7 @@
 using System.Text.Json;
 
 namespace filament.data.models;
+
 public class QueueItem
 {
     public Guid Id { get; set; } = Guid.NewGuid();

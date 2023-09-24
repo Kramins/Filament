@@ -1,19 +1,16 @@
-using filament.data;
 using filament.data.models;
 using filament.services;
 
-
 namespace filament.tasks;
+
 public class ScanLibraryTask
 {
-
     private readonly ILogger<ScanLibraryTask> _logger;
     private readonly LibraryService _libraryService;
     private readonly FileMetaDataService _fileMetaDataService;
 
     public ScanLibraryTask(LibraryService libraryService, FileMetaDataService fileMetaDataService, ILogger<ScanLibraryTask> logger)
     {
-
         _libraryService = libraryService;
         _fileMetaDataService = fileMetaDataService;
         _logger = logger;
@@ -43,11 +40,11 @@ public class ScanLibraryTask
     {
         var libraryFileExtensions = new string[] { ".mkv", ".mp4", ".avi", ".mov", ".wmv", ".m4v" };
 
-
         var libraryFiles = _libraryService.GetFiles(library.Id).ToList();
 
         WalkDirectory(library.Location, libraryFiles, library, libraryFileExtensions);
     }
+
     private void WalkDirectory(string path, List<LibraryFile> libraryFiles, Library library, string[] libraryFileExtensions)
     {
         _logger.LogInformation($"Scanning directory {path}");
@@ -117,7 +114,6 @@ public class ScanLibraryTask
             libraryDirectoryInfo.Size += fileInfo.Length;
             _libraryService.UpdateFile(library, libraryDirectoryInfo);
             _fileMetaDataService.ScanFile(library, libraryFile);
-
         }
 
         var directories = Directory.GetDirectories(path);
@@ -126,5 +122,4 @@ public class ScanLibraryTask
             WalkDirectory(directory, libraryFiles, library, libraryFileExtensions);
         }
     }
-
 }

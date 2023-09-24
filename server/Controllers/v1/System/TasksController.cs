@@ -1,15 +1,10 @@
-
-using filament.data;
-using filament.scheduler;
 using filament.services;
-using Microsoft.EntityFrameworkCore;
 
 using Microsoft.AspNetCore.Mvc;
 
 namespace filament.api.v1;
 
 [Route("api/v1/system/tasks")]
-
 public class TasksController
 {
     private readonly ILogger<TasksController> _logger;

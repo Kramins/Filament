@@ -1,5 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Swashbuckle.AspNetCore.Annotations;
+using System.ComponentModel.DataAnnotations;
+
 namespace filament.api.v1
 {
     public class ScanLibraryRequestDto

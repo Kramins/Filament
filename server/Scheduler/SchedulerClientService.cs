@@ -1,8 +1,8 @@
-using System.Linq.Expressions;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using filament.data;
 using filament.data.models;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Linq.Expressions;
 using System.Text.Json;
 
 namespace filament.scheduler;
@@ -23,15 +23,15 @@ public class SchedulerClientService
     public void EmitEvent(string eventName, object data)
     {
         var serializedData = JsonConvert.SerializeObject(data);
-
     }
+
     public Guid PublishChannelTask<T>(Expression<Action<T>> methodCall, string channel)
     {
         if (!CheckTypeIsInScope(typeof(T)))
         {
             _logger.LogError("Type {Type} is not in scope", typeof(T));
             throw new Exception($"Type {typeof(T)} is not in scope");
-          }
+        }
 
         var job = ScheduleTask.FromExpression(methodCall, typeof(T));
         var serializedJob = JsonConvert.SerializeObject(job);
@@ -52,6 +52,4 @@ public class SchedulerClientService
     {
         return _serviceProvider.GetService(type) != null;
     }
-
-
 }

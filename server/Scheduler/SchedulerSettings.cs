@@ -1,5 +1,5 @@
-
 namespace filament.scheduler;
+
 public class SchedulerSettings
 {
     public string? ConnectionString { get; set; }
