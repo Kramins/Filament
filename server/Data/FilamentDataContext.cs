@@ -19,7 +19,10 @@ public class FilamentDataContext : DbContext
     public DbSet<TranscodeJob> TranscodeJobs { get; set; }
     public DbSet<SettingsItem> Settings { get; set; }
 
-
+    public FilamentDataContext()
+    {
+        
+    }
     public FilamentDataContext(DbContextOptions<FilamentDataContext> config) : base(config)
     {
 

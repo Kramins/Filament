@@ -10,14 +10,12 @@ public class LibraryService
 {
 
     FilamentDataContext _dataContext;
-    private readonly DiskScanService _diskScanService;
     private readonly ILogger<LibraryService> _logger;
     private readonly SchedulerClientService _schedulerClientService;
 
-    public LibraryService(FilamentDataContext filamentDataContext, DiskScanService diskScanService, SchedulerClientService schedulerClientService, ILogger<LibraryService> logger)
+    public LibraryService(FilamentDataContext filamentDataContext, SchedulerClientService schedulerClientService, ILogger<LibraryService> logger)
     {
         _dataContext = filamentDataContext;
-        _diskScanService = diskScanService;
         _logger = logger;
         _schedulerClientService = schedulerClientService;
     }
@@ -29,7 +27,7 @@ public class LibraryService
 
     public int Add(Library library)
     {
-        if (!_diskScanService.Exists(library.Location))
+        if (!Path.Exists(library.Location))
         {
             _logger.LogError($"Library location {library.Location} does not exist");
             throw new FilamentException($"Library location {library.Location} does not exist");
@@ -83,15 +81,21 @@ public class LibraryService
         _dataContext.SaveChanges();
     }
 
-    public string TrimFilePath(Library library, string file)
+    public string GetFileLibraryRealativePath(Library library, string file)
     {
-        if (!file.StartsWith(library.Location))
-        {
-            _logger.LogTrace($"File {file} does not start with library location {library.Location}");
-            return file;
-        }
+        var relativePath = Path.GetRelativePath(library.Location, file);
+        var directoryName = Path.GetDirectoryName(relativePath) + Path.DirectorySeparatorChar;
+        
+        
+        //if (!file.StartsWith(library.Location))
+        //{
+        //    _logger.LogTrace($"File {file} does not start with library location {library.Location}");
+        //    return file;
+        //}
 
-        return file.Substring(library.Location.Length);
+        //return file.Substring(library.Location.Length);
+
+        return directoryName;
     }
 
     public string GetFullFilePath(Library library, string file)

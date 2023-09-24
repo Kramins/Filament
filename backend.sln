@@ -3,20 +3,40 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "server\server.csproj", "{BD996C5B-FA57-4C9E-AB06-B55BFE85BA9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "server\server.csproj", "{BD996C5B-FA57-4C9E-AB06-B55BFE85BA9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "serverTests", "serverTests\serverTests.csproj", "{7D418385-4323-435E-AD73-B1A1305E71A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5614D4C3-440B-4E66-9D96-B859E4AF3784}"
+	ProjectSection(SolutionItems) = preProject
+		testenvironments.json = testenvironments.json
+	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{66D19724-DF23-42FD-9253-3B6756A80062}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BD996C5B-FA57-4C9E-AB06-B55BFE85BA9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD996C5B-FA57-4C9E-AB06-B55BFE85BA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD996C5B-FA57-4C9E-AB06-B55BFE85BA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD996C5B-FA57-4C9E-AB06-B55BFE85BA9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D418385-4323-435E-AD73-B1A1305E71A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D418385-4323-435E-AD73-B1A1305E71A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D418385-4323-435E-AD73-B1A1305E71A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D418385-4323-435E-AD73-B1A1305E71A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D19724-DF23-42FD-9253-3B6756A80062}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D19724-DF23-42FD-9253-3B6756A80062}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D19724-DF23-42FD-9253-3B6756A80062}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D19724-DF23-42FD-9253-3B6756A80062}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77B9BAC2-7152-4258-BB4C-2059D72807D1}
 	EndGlobalSection
 EndGlobal

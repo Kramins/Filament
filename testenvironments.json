@@ -1,0 +1,11 @@
+{
+  "version": "1",
+  "environments": [
+    {
+      "name": "Docker",
+      "type": "docker",
+      //"dockerFile": "Dockerfile.test"
+      "dockerImage": "mcr.microsoft.com/dotnet/sdk:7.0"
+    }
+  ]
+}

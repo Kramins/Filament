@@ -18,11 +18,10 @@
 		"ms-dotnettools.csharp",
 		"eamodio.gitlens",
 		"streetsidesoftware.code-spell-checker",
-		"fernandoescolar.vscode-solution-explorer",
 		"ckolkman.vscode-postgres",
 		"ms-azuretools.vscode-docker",
-		"Postman.postman-for-vscode",
-		"yzhang.markdown-all-in-one"
+		"yzhang.markdown-all-in-one",
+		"ms-dotnettools.csdevkit"
 	]
     }
   },

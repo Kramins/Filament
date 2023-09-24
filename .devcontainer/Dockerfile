@@ -10,4 +10,4 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 USER vscode
 RUN dotnet tool install --global dotnet-typegen
 RUN dotnet tool install --global dotnet-ef
-# RUN export PATH="$PATH:/home/vscode/.dotnet/tools" 
+RUN export PATH="$PATH:/home/vscode/.dotnet/tools" 

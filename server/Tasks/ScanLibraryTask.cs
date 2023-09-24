@@ -59,7 +59,7 @@ public class ScanLibraryTask
         {
             libraryDirectoryInfo = new LibraryFile()
             {
-                Path = _libraryService.TrimFilePath(library, path) + "/", // Add trailing slash
+                Path = _libraryService.GetFileLibraryRealativePath(library, path) + "/", // Add trailing slash
                 Name = directoryInfo.Name,
                 IsDirectory = true,
                 Size = 0,
@@ -91,7 +91,7 @@ public class ScanLibraryTask
                 continue;
             }
             var fileInfo = new FileInfo(file);
-            var libraryFilePath = _libraryService.TrimFilePath(library, file);
+            var libraryFilePath = _libraryService.GetFileLibraryRealativePath(library, file);
             var libraryFile = libraryFiles.FirstOrDefault(x => x.Path == libraryFilePath);
 
             if (libraryFile == null)
