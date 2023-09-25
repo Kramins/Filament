@@ -12,4 +12,5 @@ public class LibraryFile : EntityBase
     public DateTime LastModified { get; set; }
     public DateTime Created { get; set; }
     public ICollection<LibraryFileMetaData> MetaData { get; set; } = null!;
+    public ICollection<TranscodeJob> TranscodeJobs { get; set; } = null!;
 }

@@ -2,7 +2,7 @@ using filament.data.models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace filament.data.configurations;
+namespace server.Data.Configurations;
 
 public class LibraryFileMetaDataConfiguration : IEntityTypeConfiguration<LibraryFileMetaData>
 {

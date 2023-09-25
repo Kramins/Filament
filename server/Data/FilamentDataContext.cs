@@ -1,7 +1,7 @@
-using filament.data.configurations;
 using filament.data.models;
 
 using Microsoft.EntityFrameworkCore;
+using server.Data.Configurations;
 
 namespace filament.data;
 
@@ -30,5 +30,8 @@ public class FilamentDataContext : DbContext
         modelBuilder.ApplyConfiguration(new LibraryConfiguration());
         modelBuilder.ApplyConfiguration(new LibraryFileConfiguration());
         modelBuilder.ApplyConfiguration(new LibraryFileMetaDataConfiguration());
+        modelBuilder.ApplyConfiguration(new QueueItemConfiguration());
+        modelBuilder.ApplyConfiguration(new SettingsConfiguration());
+        modelBuilder.ApplyConfiguration(new TranscodeJobConfiguration());
     }
 }

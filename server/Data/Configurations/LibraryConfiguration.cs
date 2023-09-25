@@ -1,4 +1,4 @@
-namespace filament.data.configurations;
+namespace server.Data.Configurations;
 
 using filament.data.models;
 using Microsoft.EntityFrameworkCore;
